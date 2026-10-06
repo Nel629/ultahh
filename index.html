@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080611">
+  <title>A Little Birthday Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="music/Bruno Mars   Just The Way You Are (Lyrics).mp3" type="audio/mpeg">
+</audio>
+ 
+<div class="bg"></div>
+<div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+<div class="bokeh"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="veil" id="veil"></div>
+
+<button class="ghost" id="musicBtn" aria-label="Putar atau jeda musik" title="Musik"><span></span><span></span><span></span></button>
+<button class="ghost" id="secretStar" aria-label="Bintang kecil"><i></i></button>
+<div class="egg" id="egg" hidden><p id="egg1">You found my little secret. 👀</p><p id="egg2">Okay... maybe you're a little more special than I planned.</p></div>
+
+<!-- 1. OPENING -->
+<section class="screen active" id="screen1">
+  <div class="opening">
+    <div class="top-line fx" style="--i:0"></div>
+    <p class="hey fx" style="--i:1">Hey, you...</p>
+    <h1 class="fx" style="--i:3">A Little Surprise</h1>
+    <h2 class="fx" style="--i:4">Made With Love</h2>
+    <p class="fx" style="--i:6">Someone prepared a little something for you.</p>
+    <p class="soft fx" style="--i:7">untuk seseorang yang spesial</p>
+    <button class="fx" style="--i:9" onclick="goTo(2)">Open Your Surprise ✨</button>
+  </div>
+</section>
+
+<!-- 2. COUNTDOWN -->
+<section class="screen" id="screen2">
+  <div class="countdown-wrap">
+    <div class="count-circle fx"><span id="countText">3</span></div>
+    <p class="fx" style="--i:2">please wait...</p>
+  </div>
+</section>
+
+<!-- 3. NAMA -->
+<section class="screen" id="screen3">
+  <div class="name-box">
+    <div class="small-line fx" style="--i:0"></div>
+    <h1 class="fx" style="--i:1">Happy Birthday,<br><span id="namaUlangTahun" class="js-name">Dea</span></h1>
+    <p class="fx" style="--i:3">Today is your special day,<br>so I made this little corner of the internet just for you.</p>
+    <p class="soft fx" style="--i:4">hari ini adalah hari spesial untukmu</p>
+    <button class="fx" style="--i:6" onclick="goTo(4)">Continue →</button>
+  </div>
+</section>
+
+<!-- 4. LITTLE QUESTION -->
+<section class="screen" id="screen4">
+  <div class="name-box">
+    <p class="section-title fx" style="--i:0">Before we continue...</p>
+    <p class="fx" style="--i:1">I have a little question for you.</p>
+    <h2 class="question fx" style="--i:3">Do you know how special you are?</h2>
+    <div class="answers fx" style="--i:5">
+      <button data-a="yes">YES</button>
+      <button data-a="maybe">MAYBE</button>
+      <button data-a="no">I DON'T KNOW</button>
+    </div>
+    <p class="reply" id="qReply" aria-live="polite">&nbsp;</p>
+    <button class="hidden" id="qNext" onclick="goTo(5)">Continue →</button>
+  </div>
+</section>
+
+<!-- 5. GALERI: LITTLE MOMENTS -->
+<section class="screen" id="screen5">
+  <div class="gallery-box">
+    <p class="section-title fx" style="--i:0">Little Moments</p>
+    <p class="hint fx" style="--i:1">tap a photo to look closer</p>
+    <div class="polaroids" id="polaroids">
+      <figure class="pol rv" tabindex="0" role="button" data-cap="One of my favorite pictures of you." style="--r:-4deg;--z:10;--d:0s"><div class="ph"><img src="images/dea  oto 2.jpeg" alt="foto 1"></div><figcaption>✦</figcaption></figure>
+      <figure class="pol rv" tabindex="0" role="button" data-cap="There's something about this moment." style="--r:3deg;--z:22;--d:.15s"><div class="ph"><img src="images/deabrazil.jpeg" alt="foto 2"></div><figcaption>✦</figcaption></figure>
+      <figure class="pol rv" tabindex="0" role="button" data-cap="I keep coming back to this one." style="--r:-2deg;--z:16;--d:.3s"><div class="ph"><img src="images/dea otto 3.jpeg" alt="foto 3"></div><figcaption>✦</figcaption></figure>
+      <figure class="pol rv" tabindex="0" role="button" data-cap="Simple, but somehow it stays with me." style="--r:4deg;--z:26;--d:.45s"><div class="ph"><img src="images/deaoto.jpeg" alt="foto 4"></div><figcaption>✦</figcaption></figure>
+    </div>
+    <button class="rv" onclick="goTo(6)">Continue →</button>
+  </div>
+</section>
+
+<!-- 6. THINGS I LIKE ABOUT YOU -->
+<section class="screen" id="screen6">
+  <div class="wide">
+    <p class="section-title fx" style="--i:0">Things I Like About You</p>
+    <div class="cards">
+      <article class="card rv"><span class="num">01</span><h3>Your Smile</h3><p>There's something about your smile that makes me smile too.</p></article>
+      <article class="card rv" style="--d:.12s"><span class="num">02</span><h3>Talking To You </h3><p>Even our little conversations can make my day a bit better.</p></article>
+      <article class="card rv"><span class="num">03</span><h3>Your Little Things</h3><p>I'm starting to notice the little things that make you, you.</p></article>
+      <article class="card rv" style="--d:.12s"><span class="num">04</span><h3>Getting to Know You</h3><p>We've only known each other for a little while, and I'm curious to discover more about you.</p></article>
+    </div>
+    <button class="rv" onclick="goTo(7)">Continue →</button>
+  </div>
+</section>
+
+<!-- 7. A LITTLE STORY (timeline) -->
+<section class="screen" id="screen7">
+  <div class="timeline-wrap">
+    <p class="section-title fx" style="--i:0">A Little Story</p>
+    <div class="timeline">
+      <div class="tl-item rv"><span class="tl-label">The beginning</span><h3>The First Hello</h3><p>It all started with a random conversation, just because we were bored, and somehow, here we are.</p><div class="tl-photo"><img src="images/chtig.jpeg" alt="foto 5"></div></div>
+      <div class="tl-item rv"><span class="tl-label">Along the way</span><h3>From Random Talks to Daily Chats</h3><p>Somehow, our random conversations turned into chats I look forward to every day.</p></div>
+      <div class="tl-item rv"><span class="tl-label">The Litte Moments</span><h3>The Talks I Look Forward To</h3><p>The little chats, the random calls, and all the silly conversations somehow became my favorite parts of the day.</p></div>
+      <div class="tl-item rv"><span class="tl-label">Right Now</span><h3>I'm Glad It's You</h3><p>It's still the beginning, but I'm really glad I got to know you. And honestly, I can't wait to see where this little story takes us.</p></div>
+    </div>
+    <button class="rv" onclick="goTo(8)">Continue →</button>
+  </div>
+</section>
+
+<!-- 8. WORDS FOR YOU (slider lama dipertahankan) -->
+<section class="screen" id="screen8">
+  <div class="story-container">
+    <div class="story-slider" id="storySlider">
+
+      <div class="story-slide">
+        <div class="story-photo"><img src="images/deaboneka.jpeg" alt="foto 1"></div>
+        <div class="story-text">
+          <h2>For You</h2>
+          <p>Hari ini kt cma mo blang, selamat ulang tahun deyaa, god bless uu🥳</p>
+        </div>
+      </div>
+
+      <div class="story-slide">
+        <div class="story-photo"><img src="images/deaperpus.jpeg" alt="foto 2"></div>
+        <div class="story-text">
+          <h2>Best Wishes</h2>
+          <p>Semoga di usia yang baru ini deya selalu di berikan kesahatan dan kekuatan, dimudahkan dalam setiap urusan den semua yang deya impikan bisa terwujud</p>
+        </div>
+      </div>
+
+      <div class="story-slide">
+        <div class="story-photo"><img src="images/dea pantai.jpeg" alt="foto 3"></div>
+        <div class="story-text">
+          <h2>Little Message</h2>
+          <p>Thx deya sudah sudah hadir dalam kt p hidup, kamu adalah salah satu orang spesial yang kt miliki, walaupun baru sekedar justfriend mar kt harap bolh lebih dari itu</p>
+        </div>
+      </div>
+
+      <div class="story-slide">
+        <div class="story-photo"><img src="images/WhatsApp Image 2026-10-06 at 19.09.18.jpeg" alt="foto 4"></div>
+        <div class="story-text">
+          <h2>Keep Shining</h2>
+          <p>Tetap jadi deya yang sekarang yahh, deya yang ceria, deya yang manizz, deya yang selalu ada buat dirly dan juga orang orang terdekat kamu. Maaf neh dea kt nd bisa memberikan apa apa for nagna p ulttah ini, dan juga maaf neh nd bisa datang di sana untuk memberikan hadiahh, kt cma bisa doakan dari sini, mo doakan yang  terbaik for ngana, btw HBD yyahh  Deyaa🥳</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="slider-control">
+      <button onclick="prevStory()" aria-label="Sebelumnya">‹</button>
+      <div class="story-dots">
+        <span class="dot active-dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <button onclick="nextStory()" aria-label="Berikutnya">›</button>
+    </div>
+
+    <button class="continue-btn" onclick="goTo(9)">Continue →</button>
+  </div>
+</section>
+
+<!-- 9. SECRET DOOR -->
+<section class="screen" id="screen9">
+  <div class="name-box">
+    <div class="small-line fx" style="--i:0"></div>
+    <h1 class="fx" style="--i:1">One more thing...</h1>
+    <p class="fx" style="--i:3">I saved something just for you.</p>
+    <button class="fx" style="--i:5" id="openDoor">Open 🎁</button>
+  </div>
+</section>
+
+<!-- 10. LETTER -->
+<section class="screen" id="screen10">
+  <div class="name-box">
+    <div class="intro-letter" id="letterIntro">
+      <div class="mail">💌</div>
+      <h2 class="fx" style="--i:1">A Letter For You</h2>
+    </div>
+    <div class="stage" id="stage">
+      <div class="env" id="env" aria-hidden="true">
+        <div class="back"></div><div class="sheet"></div><div class="front"></div><div class="flap"></div>
+      </div>
+      <div class="paper" id="paper"><p class="letter"><span id="ty"></span><span id="rest" class="rest"></span></p></div>
+    </div>
+    <button id="openLetter" class="fx" style="--i:3">Open</button>
+    <button id="letterNext" class="hidden" onclick="goTo(11)">Continue →</button>
+  </div>
+</section>
+
+<!-- 11. CAKE -->
+<section class="screen" id="screen11">
+  <div class="name-box">
+    <p class="section-title fx" style="--i:0">One last thing...</p>
+    <h2 class="question fx" style="--i:1" id="wishTitle">Make a wish...</h2>
+    <button class="ghost cake fx" style="--i:3" id="cake" aria-label="Tiup lilin dan buat permintaan">
+      <span class="candle" style="left:34%"><b class="flame"></b></span>
+      <span class="candle" style="left:50%;height:46px"><b class="flame"></b></span>
+      <span class="candle" style="left:66%"><b class="flame"></b></span>
+      <span class="tier t2"></span><span class="tier t1"></span><span class="plate"></span>
+    </button>
+    <p class="hint fx" style="--i:5" id="cakeHint">tap the candles</p>
+    <div class="cake-done hidden" id="cakeDone">
+      <h2>Happy Birthday, <span class="js-name">Dea</span> 🎂✨</h2>
+      <button onclick="goTo(12)">Continue →</button>
+    </div>
+  </div>
+</section>
+
+<!-- 12. AKHIR -->
+<section class="screen" id="screen12">
+  <div class="final-box">
+    <div class="sparkle fx"></div>
+    <h1 class="fx" style="--i:1">Happy Birthday,<br><span class="js-name">Dea</span>.</h1>
+    <div class="heart fx" style="--i:2">♡</div>
+    <p class="fx" style="--i:3">I hope this new chapter brings you more reasons to smile,<br>more moments that make you happy,<br>and lots of good things you never expected.</p>
+    <p class="fx" style="--i:5">I hope you get everything you've been wishing <br>for, and when life gets a little tough,<br>I hope you always find a reason to keep going.</p>
+    <p class="fx" style="--i:7">We've only known each other for a little while,but<br>I'm really happy that a random conversation<br>somehow brought me to you.</p>
+    <p class="fx" style="--i:6">Thank you for all the little chats, the random<br>calls, the laughs, and all the moments we've shared so far.</p>
+    <p class="fx" style="--i:6">Have a beautiful birthday. 🤍</p>
+    <p class="sign fx" style="--i:7">— <span class="js-from">[YOUR NAME]</span></p>
+    <button class="fx" style="--i:8" onclick="restart()">WATCH IT AGAIN</button>
+  </div>
+</section>
+
+<!-- Lightbox galeri -->
+<div class="lb" id="lb" aria-hidden="true"><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
+
+<script src="script.js"></script>
+</body>
+</html>
